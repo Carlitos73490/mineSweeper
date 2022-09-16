@@ -1,4 +1,5 @@
 from enum import Enum
+from classes.grid import Grid
 
 
 class ActionTitle(Enum):
@@ -8,6 +9,7 @@ class ActionTitle(Enum):
 
 class Minesweeper:
     grid_dimension = None
+    grid = None
     action_splits = None
     is_playing = False
 
@@ -15,7 +17,8 @@ class Minesweeper:
     def new_game(self):
         self.is_playing = True
         print("Début de la partie")
-        #self.grid_dimension = grid_dimension
+        self.grid = Grid(self.grid_dimension)
+        print(self.grid)
     def quit(self):
         self.is_playing = False
         print("Fin de la partie")
@@ -31,7 +34,7 @@ class Minesweeper:
         if self.action_splits[0] == "newgame":
             self.new_game()
         elif not self.is_playing:
-            raise Exception("Lauch game with command newgame")
+            raise Exception("Launch game with command newgame")
         elif self.action_splits[0] == "F" :
             self.flag()
         elif self.action_splits[0] == "quit":
