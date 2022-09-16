@@ -13,7 +13,5 @@ class Tile:
     def __str__(self):
         if self.is_flag:
             return "F"
-        elif self.is_open:
-            raise NotImplementedError()
         else:
             return "#"

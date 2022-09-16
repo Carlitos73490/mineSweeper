@@ -5,16 +5,12 @@ from classes.tileHint import TileHint
 
 
 class Grid:
-    # tiles_hint : []
-    tiles = None
-    dimension = None
-    remaining = 0
-    is_lost = False
-
 
     def __init__(self, dimension):
+        self.is_lost = False
         self.dimension = dimension
         self.tiles = []
+        self.remaining = 0
         for x in range(self.dimension):
             for y in range(self.dimension):
                 self.tiles.append(TileHint(self, x, y))
@@ -61,11 +57,10 @@ class Grid:
             if tile.x == x and tile.y == y:
                 return tile
 
+    @property
     def is_win(self):
         return self.remaining == 0
 
-    def is_lost(self):
-        return self.is_lost
 
     def __str__(self):
         display_string = ""
