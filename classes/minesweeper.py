@@ -8,6 +8,9 @@ class ActionTitle(Enum):
 
 
 class Minesweeper:
+    def __init__(self):
+        pass
+
     grid = None
     is_playing = False
     is_lost = False
@@ -22,10 +25,9 @@ class Minesweeper:
                 print("Début de la partie")
                 self.is_playing = True
                 self.grid = Grid(self.grid_dimension)
-            else :
+            else:
                 raise Exception("Launch game with command newgame")
         elif self.is_playing:
-
 
             if self.action_splits[0] == "F":
                 # Flag
