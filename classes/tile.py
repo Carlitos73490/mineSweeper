@@ -10,6 +10,21 @@ class Tile:
         self.x = x
         self.y = y
 
+    def open(self):
+        opened = False
+        if self is not None:
+            if self.is_flag:
+                raise Exception("La thuile est flag")
+            elif self.is_open == False :
+                self.is_open = True
+                opened = True
+            else :
+                opened = False
+
+        else:
+            raise Exception("La thuile n'existe pas")
+        return opened
+
     def __str__(self):
         if self.is_flag:
             return "F"
