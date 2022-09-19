@@ -31,12 +31,22 @@ class Minesweeper:
 
             if self.action_splits[0] == "F":
                 # Flag
-                print(ActionTitle.FLAG.value, " ", self.action_splits[1], ",", self.action_splits[2])
-                self.grid.toggle_flag(int(self.action_splits[1]), int(self.action_splits[2]))
+                print(ActionTitle.FLAG.value,
+                      " ",
+                      self.action_splits[1],
+                      ",",
+                      self.action_splits[2])
+                self.grid.toggle_flag(int(self.action_splits[1]),
+                                      int(self.action_splits[2]))
             elif len(self.action_splits) == 2:
                 # Open
-                print(ActionTitle.OPEN.value, " ", self.action_splits[0], ",", self.action_splits[1])
-                self.grid.open(int(self.action_splits[0]), int(self.action_splits[1]))
+                print(ActionTitle.OPEN.value,
+                      " ",
+                      self.action_splits[0],
+                      ",",
+                      self.action_splits[1])
+                self.grid.open(int(self.action_splits[0]),
+                               int(self.action_splits[1]))
             elif self.action_splits[0] == "quit":
                 # Quit
                 print("Fin de la partie")
