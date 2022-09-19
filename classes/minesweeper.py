@@ -33,12 +33,13 @@ class Minesweeper:
         else:
             raise Exception("Unrecognized input")
 
-            self.is_playing = not self.is_win and not self.is_lost
+        self.is_playing = not self.is_win and not self.is_lost
 
     def _open(self):
 
         if self.grid.is_win() or self.grid.is_lost():
-            raise Exception("la partie est terminé relancez en une avec : newgame ")
+            raise Exception("la partie est terminé "
+                            "relancez en une avec : newgame ")
 
         print(ActionTitle.OPEN.value,
               " ",
