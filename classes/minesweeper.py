@@ -8,51 +8,55 @@ class ActionTitle(Enum):
 
 
 class Minesweeper:
-    def __init__(self):
-        pass
 
-    grid = None
-    is_playing = False
-    is_lost = False
-    is_win = False
+    def __init__(self):
+        self.action_splits = None
+        self.is_playing = False
+        self.is_lost = False
+        self.is_win = False
+        self.grid = None
 
     def actions_listener(self):
-        self.action_splits = input("{action} x y : ").split()
+        self.action_splits = input("{action} x y : " if self.is_playing else "Nouvelle partie : ").split()
 
-        if not self.is_playing:
-            if self.action_splits[0] == "newgame":
-                # New Game
-                print("Début de la partie")
-                self.is_playing = True
-                self.grid = Grid(self.grid_dimension)
-            else:
-                raise Exception("Launch game with command newgame")
-        elif self.is_playing:
-
-            if self.action_splits[0] == "F":
-                # Flag
-                print(ActionTitle.FLAG.value,
-                      " ",
-                      self.action_splits[1],
-                      ",",
-                      self.action_splits[2])
-                self.grid.toggle_flag(int(self.action_splits[1]),
-                                      int(self.action_splits[2]))
-            elif len(self.action_splits) == 2:
-                # Open
-                print(ActionTitle.OPEN.value,
-                      " ",
-                      self.action_splits[0],
-                      ",",
-                      self.action_splits[1])
-                self.grid.open(int(self.action_splits[0]),
-                               int(self.action_splits[1]))
-            elif self.action_splits[0] == "quit":
-                # Quit
-                print("Fin de la partie")
-                self.is_playing = False
-            else:
-                raise Exception("Unrecognized input")
+        if self.action_splits[0] == "newgame":
+           self._newgame()
+        elif not self.is_playing :
+            raise Exception("Game not launched : newgame")
+        elif self.action_splits[0] == "F":
+            self._flagg()
+        elif len(self.action_splits) == 2:
+            self._open()
+        elif self.action_splits[0] == "quit":
+            self._quit()
+        else:
+            raise Exception("Unrecognized input")
             self.is_win = self.grid.is_win
             self.is_lost = self.grid.is_lost
             self.is_playing = not self.is_win and not self.is_lost
+
+    def _open(self):
+        print(ActionTitle.OPEN.value,
+              " ",
+              self.action_splits[0],
+              ",",
+              self.action_splits[1])
+        self.grid.open(int(self.action_splits[0]),
+                       int(self.action_splits[1]))
+
+    def _flagg(self):
+        print(ActionTitle.FLAG.value,
+              " ",
+              self.action_splits[1],
+              ",",
+              self.action_splits[2])
+        self.grid.toggle_flag(int(self.action_splits[1]),
+                              int(self.action_splits[2]))
+    def _newgame(self):
+        print("Début de la partie")
+        self.is_playing = True
+        self.grid = Grid(self.grid_dimension)
+
+    def _quit(self):
+        print("Fin de la partie")
+        self.is_playing = False
