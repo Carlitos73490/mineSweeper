@@ -15,11 +15,14 @@ class Minesweeper:
         self.grid = None
 
     def actions_listener(self):
-        self.action_splits = input("{action} x y : " if self.is_playing else "Nouvelle partie : ").split()
+        self.action_splits = \
+            input("{action} x y : "
+                  if self.is_playing
+                  else "Nouvelle partie : ").split()
 
         if self.action_splits[0] == "newgame":
-           self._newgame()
-        elif not self.is_playing :
+            self._newgame()
+        elif not self.is_playing:
             raise Exception("Game not launched : newgame")
         elif self.action_splits[0] == "F":
             self._flagg()
@@ -49,6 +52,7 @@ class Minesweeper:
               self.action_splits[2])
         self.grid.toggle_flag(int(self.action_splits[1]),
                               int(self.action_splits[2]))
+
     def _newgame(self):
         print("Début de la partie")
         self.is_playing = True
