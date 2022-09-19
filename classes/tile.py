@@ -15,11 +15,11 @@ class Tile:
         if self is not None:
             if self.is_flag:
                 raise Exception("La thuile est flag")
-            elif self.is_open == False :
+            elif self.is_open == False:
                 self.is_open = True
                 opened = True
-            else :
-                opened = False
+            else:
+                raise Exception("La thuile est déjà ouverte")
 
         else:
             raise Exception("La thuile n'existe pas")
