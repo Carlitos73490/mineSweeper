@@ -32,9 +32,6 @@ class Minesweeper:
             self._quit()
         else:
             raise Exception("Unrecognized input")
-
-        self.is_playing = not self.is_win and not self.is_lost
-
     def _open(self):
 
         if self.grid.is_win() or self.grid.is_lost():

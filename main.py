@@ -9,11 +9,7 @@ if __name__ == '__main__':
     while True:
         m.actions_listener()
         print(m.grid)
-        if not m.is_playing:
-            break
-        elif m.grid.is_lost():
-            print('Gagné')
-            break
-        elif m.grid.is_win():
+        if m.grid.is_lost():
             print('Vous êtes nul')
-            break
+        elif m.grid.is_win():
+            print('Vous avez gagné')
