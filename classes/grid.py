@@ -40,7 +40,8 @@ class Grid:
                 current_tile_y = iy + startY
                 tile_to_open = self.get_tile(current_tile_x, current_tile_y)
                 # la condition sur la mine ne doit pas exister
-                if (tile_to_open is not None and isinstance(tile_to_open, TileHint)):
+                if (tile_to_open
+                        is not None and isinstance(tile_to_open, TileHint)):
                     if not tile_to_open.is_open:
                         if tile_to_open.open():
                             self.remaining -= 1
@@ -61,11 +62,12 @@ class Grid:
         # selection de tuples au hasard dans la liste
         tiles_to_mine = random.sample(self.tiles, len(self.tiles) // 10)
         for mine in tiles_to_mine:
-            #version optimisé
+            # version optimisé
             tile_to_mine = self.get_tile(mine.x, mine.y)
-            if tile_to_mine is not None :
-                self.tiles[mine.x * self.dimension + mine.y] = TileMine(self, mine.x, mine.y)
-            #old version
+            if tile_to_mine is not None:
+                self.tiles[mine.x * self.dimension + mine.y] = \
+                    TileMine(self, mine.x, mine.y)
+            # old version
                 # Récupération de l'index de l'objet à miner
                 # dans la liste de tuiles principales
                 # index = self.tiles.index(mine)
@@ -78,7 +80,6 @@ class Grid:
             return None
         else:
             return self.tiles[x * self.dimension + y]
-
 
     def is_win(self):
         return self.remaining == 0
@@ -94,7 +95,8 @@ class Grid:
         for i in range(len(self.tiles)):
             display_line += "|" + str(self.tiles[i])
             if (i + 1) % self.dimension == 0:
-                display_string += display_line + "|  x :" + str(self.tiles[i].x) +"\n"
+                display_string += display_line + "|  x :" + \
+                                  str(self.tiles[i].x) + "\n"
                 display_line = ""
 
         display_string += "remaining : " + str(self.remaining)

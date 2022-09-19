@@ -19,7 +19,7 @@ class TileHint(Tile):
                     # On ne check pas la case du milieu qui est elle même
                     if x == 1 and y == 1:
                         pass
-                    else :
+                    else:
                         # Si la case est une mine on incrémente la property
                         if isinstance(
                                 self.grid.get_tile(current_tile_x,
