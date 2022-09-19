@@ -87,11 +87,12 @@ class Grid:
     def __str__(self):
         display_string = ""
         display_line = ""
+
         # Tiles
         for i in range(len(self.tiles)):
             display_line += "|" + str(self.tiles[i])
             if (i + 1) % self.dimension == 0:
-                display_string += display_line + "|\n"
+                display_string += display_line + "|  x :" + str(self.tiles[i].x) +"\n"
                 display_line = ""
 
         display_string += "remaining : " + str(self.remaining)
