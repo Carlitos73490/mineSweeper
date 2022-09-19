@@ -33,6 +33,10 @@ class Minesweeper:
             self.is_playing = not self.is_win and not self.is_lost
 
     def _open(self):
+
+        if self.grid.is_win() or self.grid.is_lost():
+            raise Exception("la partie est terminé relancez en une avec : newgame ")
+
         print(ActionTitle.OPEN.value,
               " ",
               self.action_splits[0],
