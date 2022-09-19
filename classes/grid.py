@@ -7,9 +7,9 @@ from classes.tileHint import TileHint
 class Grid:
 
     def __init__(self, dimension):
-        self.is_lost = False
         self.dimension = dimension
         self.tiles = []
+        self._is_lost = False
         self.remaining = 0
         for x in range(self.dimension):
             for y in range(self.dimension):
@@ -23,7 +23,7 @@ class Grid:
         self.remaining -= 1
 
         if isinstance(tile_to_open, TileMine):
-            self.is_lost = True
+            self._is_lost = True
 
             # fin de partie ouverture de tout
             for tile in self.tiles:
@@ -80,9 +80,11 @@ class Grid:
             return self.tiles[x * self.dimension + y]
 
 
-    @property
     def is_win(self):
         return self.remaining == 0
+
+    def is_lost(self):
+        return self._is_lost
 
     def __str__(self):
         display_string = ""

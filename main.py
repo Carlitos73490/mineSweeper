@@ -11,8 +11,9 @@ if __name__ == '__main__':
         print(m.grid)
         if not m.is_playing:
             break
-
-    if m.is_win:
-        print('Gagné')
-    elif m.is_lost:
-        print('Vous êtes nul')
+        elif m.grid.is_lost():
+            print('Gagné')
+            break
+        elif m.grid.is_win():
+            print('Vous êtes nul')
+            break

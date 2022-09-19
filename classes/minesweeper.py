@@ -12,8 +12,6 @@ class Minesweeper:
     def __init__(self):
         self.action_splits = None
         self.is_playing = False
-        self.is_lost = False
-        self.is_win = False
         self.grid = None
 
     def actions_listener(self):
@@ -31,8 +29,7 @@ class Minesweeper:
             self._quit()
         else:
             raise Exception("Unrecognized input")
-            self.is_win = self.grid.is_win
-            self.is_lost = self.grid.is_lost
+
             self.is_playing = not self.is_win and not self.is_lost
 
     def _open(self):
