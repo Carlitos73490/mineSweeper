@@ -25,27 +25,27 @@ class Grid:
         if isinstance(tile_to_open, TileMine):
             self.is_lost = True
 
-            #fin de partie ouverture de tout
+            # fin de partie ouverture de tout
             for tile in self.tiles:
                 tile.is_open = True
         else:
             self._open_full(x, y)
 
-    def _open_full(self,x,y):
-            startX = x - 1
-            startY = y - 1
-            for ix in range(3):
-                for iy in range(3):
-                    current_tile_x = ix + startX
-                    current_tile_y = iy + startY
-                    tile_to_open = self.get_tile(current_tile_x, current_tile_y)
-                    # la condition sur la mine ne doit pas exister
-                    if(tile_to_open is not None and isinstance(tile_to_open, TileHint) ):
-                        if not tile_to_open.is_open:
-                            if tile_to_open.open():
-                                self.remaining -= 1
-                            if tile_to_open.hint == " ":
-                                self._open_full(current_tile_x, current_tile_y)
+    def _open_full(self, x, y):
+        startX = x - 1
+        startY = y - 1
+        for ix in range(3):
+            for iy in range(3):
+                current_tile_x = ix + startX
+                current_tile_y = iy + startY
+                tile_to_open = self.get_tile(current_tile_x, current_tile_y)
+                # la condition sur la mine ne doit pas exister
+                if (tile_to_open is not None and isinstance(tile_to_open, TileHint)):
+                    if not tile_to_open.is_open:
+                        if tile_to_open.open():
+                            self.remaining -= 1
+                        if tile_to_open.hint == " ":
+                            self._open_full(current_tile_x, current_tile_y)
 
     def toggle_flag(self, x, y):
         tile_to_toggle = self.get_tile(x, y)
@@ -61,17 +61,24 @@ class Grid:
         # selection de tuples au hasard dans la liste
         tiles_to_mine = random.sample(self.tiles, len(self.tiles) // 10)
         for mine in tiles_to_mine:
-            # Récupération de l'index de l'objet à miner
-            # dans la liste de tuiles principales
-            index = self.tiles.index(mine)
-            # Remplacement dans la liste principales
-            self.tiles[index] = TileMine(self, mine.x, mine.y)
+            #version optimisé
+            tile_to_mine = self.get_tile(mine.x, mine.y)
+            if tile_to_mine is not None :
+                self.tiles[mine.x * self.dimension + mine.y] = TileMine(self, mine.x, mine.y)
+            #old version
+                # Récupération de l'index de l'objet à miner
+                # dans la liste de tuiles principales
+                # index = self.tiles.index(mine)
+                # Remplacement dans la liste principales
+                # self.tiles[index] = TileMine(self, mine.x, mine.y)
             self.remaining -= 1
 
     def get_tile(self, x, y):
-        for tile in self.tiles:
-            if tile.x == x and tile.y == y:
-                return tile
+        if x > self.dimension - 1 or x < 0 or y > self.dimension - 1 or y < 0:
+            return None
+        else:
+            return self.tiles[x * self.dimension + y]
+
 
     @property
     def is_win(self):
