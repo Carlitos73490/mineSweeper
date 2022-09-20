@@ -7,6 +7,7 @@ from classes.tileHint import TileHint
 class Grid:
 
     def __init__(self, dimension):
+        self.firstOpen = True
         self.dimension = dimension
         self.tiles = []
         self._is_lost = False
@@ -15,9 +16,10 @@ class Grid:
             for y in range(self.dimension):
                 self.tiles.append(TileHint(self, x, y))
                 self.remaining += 1
-        self._mines_coord()
+
 
     def open(self, x, y):
+
         tile_to_open = self.get_tile(x, y)
         tile_to_open.open()
         self.remaining -= 1
@@ -29,6 +31,9 @@ class Grid:
             for tile in self.tiles:
                 tile.is_open = True
         else:
+            if (self.firstOpen):
+                self._mines_coord()
+                self.firstOpen = False
             self._open_full(x, y)
 
     def _open_full(self, x, y):
@@ -59,8 +64,9 @@ class Grid:
             raise Exception("La thuile n'existe pas")
 
     def _mines_coord(self):
-        # selection de tuples au hasard dans la liste
-        tiles_to_mine = random.sample(self.tiles, len(self.tiles) // 10)
+        # selection de tuples au hasard dans la liste filtré des tuiles non ouverte (seulement une ouverte)
+        filteredtiles = list(filter(lambda tile : tile.is_open is False, self.tiles))
+        tiles_to_mine = random.sample(filteredtiles, len(self.tiles) // 10)
         for mine in tiles_to_mine:
             # version optimisé
             tile_to_mine = self.get_tile(mine.x, mine.y)
@@ -93,9 +99,9 @@ class Grid:
 
         # Tiles
         for i in range(len(self.tiles)):
-            display_line += "|" + str(self.tiles[i])
+            display_line += " " + str(self.tiles[i])
             if (i + 1) % self.dimension == 0:
-                display_string += display_line + "|  x :" + \
+                display_string += display_line + "  x :" + \
                                   str(self.tiles[i].x) + "\n"
                 display_line = ""
 
