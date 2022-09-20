@@ -1,5 +1,5 @@
 from classes.tile import Tile
-from classes.tileMine import TileMine
+from classes.tilemine import TileMine
 
 
 class TileHint(Tile):

@@ -1,7 +1,7 @@
 import random
 
-from classes.tileMine import TileMine
-from classes.tileHint import TileHint
+from classes.tilemine import TileMine
+from classes.tilehint import TileHint
 
 
 class Grid:
