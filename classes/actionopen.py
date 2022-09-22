@@ -1,5 +1,6 @@
 from classes.action import Action
 from enums.actiontitle import  ActionTitle
+from exceptions.game_not_launched_exception import GameNotLaunchedException
 
 
 class ActionOpen(Action):
@@ -18,4 +19,5 @@ class ActionOpen(Action):
                   self.y)
             minesweeper.grid.open(int(self.x),int(self.y))
         else:
-         print("Lancez d'abord la partie")
+            raise GameNotLaunchedException()
+

@@ -2,6 +2,8 @@ import random
 
 from classes.tilemine import TileMine
 from classes.tilehint import TileHint
+from exceptions.tile_already_open_exception import TileAlreadyOpenException
+from exceptions.tile_dont_exist_exception import TileDontExistException
 
 
 class Grid:
@@ -21,20 +23,23 @@ class Grid:
     def open(self, x, y):
 
         tile_to_open = self.get_tile(x, y)
-        tile_to_open.open()
-        self.remaining -= 1
+
 
         if isinstance(tile_to_open, TileMine):
             self._is_lost = True
-
             # fin de partie ouverture de tout
             for tile in self.tiles:
                 tile.is_open = True
-        else:
+        elif tile_to_open is not None:
+            tile_to_open.open()
+            self.remaining -= 1
             if (self.firstOpen):
                 self._mines_coord()
                 self.firstOpen = False
             self._open_full(x, y)
+        else:
+            raise TileDontExistException(x,y)
+
 
     def _open_full(self, x, y):
         startX = x - 1
@@ -57,11 +62,11 @@ class Grid:
         tile_to_toggle = self.get_tile(x, y)
         if tile_to_toggle is not None:
             if tile_to_toggle.is_open:
-                raise Exception("La thuile est déjà ouverte")
+                raise TileAlreadyOpenException()
             else:
                 tile_to_toggle.is_flag = not tile_to_toggle.is_flag
         else:
-            raise Exception("La thuile n'existe pas")
+            raise TileDontExistException()
 
     def _mines_coord(self):
         # selection de tuples au hasard dans la liste filtré des tuiles non ouverte (seulement une ouverte)
