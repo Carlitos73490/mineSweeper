@@ -7,5 +7,3 @@ class Minesweeper:
         self.is_playing = False
         self.grid = None
         self.dimension = dimension
-
-

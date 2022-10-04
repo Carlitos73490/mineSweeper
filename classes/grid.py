@@ -9,7 +9,7 @@ from exceptions.tile_dont_exist_exception import TileDontExistException
 class Grid:
 
     def __init__(self, dimension):
-        self.firstOpen = True
+        self.first_open = True
         self.dimension = dimension
         self.tiles = []
         self._is_lost = False
@@ -33,21 +33,21 @@ class Grid:
         elif tile_to_open is not None:
             tile_to_open.open()
             self.remaining -= 1
-            if (self.firstOpen):
+            if self.first_open:
                 self._mines_coord()
-                self.firstOpen = False
+                self.first_open = False
             self._open_full(x, y)
         else:
             raise TileDontExistException(x,y)
 
 
     def _open_full(self, x, y):
-        startX = x - 1
-        startY = y - 1
-        for ix in range(3):
-            for iy in range(3):
-                current_tile_x = ix + startX
-                current_tile_y = iy + startY
+        start_x = x - 1
+        start_y = y - 1
+        for i_x in range(3):
+            for i_y in range(3):
+                current_tile_x = i_x + start_x
+                current_tile_y = i_y + start_y
                 tile_to_open = self.get_tile(current_tile_x, current_tile_y)
                 # la condition sur la mine ne doit pas exister
                 if (tile_to_open
@@ -69,7 +69,8 @@ class Grid:
             raise TileDontExistException()
 
     def _mines_coord(self):
-        # selection de tuples au hasard dans la liste filtré des tuiles non ouverte (seulement une ouverte)
+        # selection de tuples au hasard dans la liste
+        # filtré des tuiles non ouverte (seulement une ouverte)
         filteredtiles = list(filter(lambda tile : tile.is_open is False, self.tiles))
         tiles_to_mine = random.sample(filteredtiles, len(self.tiles) // 10)
         for mine in tiles_to_mine:
